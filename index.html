@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>epic.io — Asistente Musical & Songwriting Suite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8B5CF6',
+              blue: '#3B82F6',
+              pink: '#EC4899',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090D16;
+      color: #F3F4F6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-8 max-w-md mx-auto">
 
+  <!-- Header -->
+  <header class="flex justify-between items-center py-4 mb-6">
+    <div>
+      <span class="text-[10px] tracking-widest text-purple-400 uppercase font-mono">ASISTENTE MUSICAL</span>
+      <h1 class="text-3xl font-extrabold tracking-tight text-white">epic.io</h1>
+    </div>
+    <button onclick="toggleModal('about-modal')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-lg hover:bg-white/10 transition">
+      ✨
+    </button>
+  </header>
+
+  <!-- Main Grid Tools -->
+  <main class="space-y-4 flex-1">
+    <p class="text-xs text-gray-400 font-medium tracking-wide uppercase px-1">Tus herramientas</p>
+    
+    <div class="grid grid-cols-2 gap-3">
+      <!-- Suno Prompt Formatter -->
+      <button onclick="toggleModal('suno-modal')" class="p-4 rounded-3xl bg-gradient-to-br from-purple-600 to-blue-600 text-left flex flex-col justify-between h-36 shadow-lg hover:opacity-95 transition">
+        <span class="text-2xl">✍️</span>
+        <div>
+          <h2 class="font-bold text-white text-sm">Suno Prompt Formatter</h2>
+          <p class="text-[11px] text-purple-100 opacity-80">Crea prompts perfectos</p>
+        </div>
+      </button>
+
+      <!-- Sílabas & Rimas -->
+      <button onclick="toggleModal('rhyme-modal')" class="p-4 rounded-3xl bg-gradient-to-br from-pink-500 to-rose-600 text-left flex flex-col justify-between h-36 shadow-lg hover:opacity-95 transition">
+        <span class="text-2xl">abc</span>
+        <div>
+          <h2 class="font-bold text-white text-sm">Sílabas & Rimas</h2>
+          <p class="text-[11px] text-pink-100 opacity-80">Pulsa tus letras</p>
+        </div>
+      </button>
+
+      <!-- BPM Tap Counter -->
+      <button onclick="tapBpm()" class="p-4 rounded-3xl bg-gradient-to-br from-cyan-500 to-blue-500 text-left flex flex-col justify-between h-36 shadow-lg hover:opacity-95 transition relative overflow-hidden">
+        <span class="text-2xl">🥁</span>
+        <div>
+          <h2 class="font-bold text-white text-sm">BPM Tap Counter</h2>
+          <p id="bpm-display" class="text-xs text-cyan-100 font-mono font-bold">Toca para medir</p>
+        </div>
+      </button>
+
+      <!-- Voice & Lyric Pad -->
+      <button onclick="toggleModal('notes-modal')" class="p-4 rounded-3xl bg-gradient-to-br from-amber-500 to-orange-600 text-left flex flex-col justify-between h-36 shadow-lg hover:opacity-95 transition">
+        <span class="text-2xl">🎙️</span>
+        <div>
+          <h2 class="font-bold text-white text-sm">Voice Memo Lyric Pad</h2>
+          <p class="text-[11px] text-amber-100 opacity-80">Captura la inspiración</p>
+        </div>
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full py-6 text-center mt-auto">
+    <p class="text-[10px] tracking-[0.25em] font-mono text-gray-500 uppercase">
+      POWERED BY HONCH™ <span class="mx-1 text-gray-700">/</span> EL EPIC <span class="mx-1 text-gray-700">/</span> JCG INTELLIGENCE
+    </p>
+  </footer>
+
+  <!-- About / Backstory Modal -->
+  <div id="about-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full space-y-4 max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <h3 class="font-bold text-lg text-white">Sobre epic.io</h3>
+        <button onclick="toggleModal('about-modal')" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <div class="text-xs text-gray-300 space-y-3 leading-relaxed">
+        <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">ORIGEN EAST LA</p>
+        <p>
+          <strong>epic.io</strong> fue ideado y concebido originalmente por <strong>Epic</strong>, artista y compositor originario de East Los Angeles. Nacido de una conversación real entre amigos cercanos tras apoyar en una mudanza, este proyecto fue creado para unir su estilo lírico natural, sus raíces musicales de Los Ángeles y la tecnología moderna de estudio.
+        </p>
+        <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">HERRAMIENTAS INCLUIDAS</p>
+        <ul class="list-disc pl-4 space-y-1 text-gray-400">
+          <li><strong>Suno Tag Architecture:</strong> Formateo automático en corchetes ([Verso], [Coro], [Requinto Solo]) para IA.</li>
+          <li><strong>Ajustes Corridos Tumbados:</strong> Presets para Requinto, Bajo Sexto, Charcheta y Tololoche.</li>
+          <li><strong>BPM Tap Counter:</strong> Medidor de tiempo en vivo para Sierreño, Tumbado o Trap Bélico.</li>
+          <li><strong>Lyric Pad & Exportación:</strong> Guarda tus letras directamente en tu teléfono.</li>
+        </ul>
+      </div>
+      <div class="pt-2 border-t border-white/10 text-center">
+        <p class="text-[9px] tracking-[0.2em] font-mono text-gray-500 uppercase">
+          POWERED BY HONCH™ / EL EPIC / JCG INTELLIGENCE
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suno Formatter Modal Placeholder -->
+  <div id="suno-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full space-y-4">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <h3 class="font-bold text-lg text-white">Suno Prompt Formatter</h3>
+        <button onclick="toggleModal('suno-modal')" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <textarea id="suno-input" placeholder="Escribe tus letras aquí..." class="w-full h-32 bg-black/40 border border-white/10 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-purple-500"></textarea>
+      <button onclick="formatSunoText()" class="w-full py-3 bg-purple-600 rounded-2xl text-xs font-bold text-white hover:bg-purple-500 transition">Añadir Etiquetas [Corridos Tumbados]</button>
+    </div>
+  </div>
+
+  <!-- Rhyme Modal Placeholder -->
+  <div id="rhyme-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full space-y-4 text-center">
+      <h3 class="font-bold text-lg text-white">Sílabas & Rimas</h3>
+      <p class="text-xs text-gray-400">Ingresa una palabra para buscar rimas asonantes y consonantes.</p>
+      <input type="text" placeholder="Ej: Fuego, Pluma, Calle..." class="w-full bg-black/40 border border-white/10 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-pink-500">
+      <button onclick="toggleModal('rhyme-modal')" class="w-full py-3 bg-pink-600 rounded-2xl text-xs font-bold text-white">Buscar Rimas</button>
+    </div>
+  </div>
+
+  <!-- Notes Modal Placeholder -->
+  <div id="notes-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full space-y-4">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <h3 class="font-bold text-lg text-white">Lyric Pad</h3>
+        <button onclick="toggleModal('notes-modal')" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <textarea placeholder="Escribe tus barras o notas de voz..." class="w-full h-36 bg-black/40 border border-white/10 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
+      <button onclick="toggleModal('notes-modal')" class="w-full py-3 bg-amber-600 rounded-2xl text-xs font-bold text-white">Guardar en Teléfono</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.toggle('hidden');
+    }
+
+    // Simple BPM Tap Counter logic
+    let taps = [];
+    function tapBpm() {
+      const now = Date.now();
+      taps.push(now);
+      if (taps.length > 4) taps.shift();
+      if (taps.length > 1) {
+        const intervals = [];
+        for (let i = 1; i < taps.length; i++) {
+          intervals.push(taps[i] - taps[i - 1]);
+        }
+        const avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
+        const bpm = Math.round(60000 / avgInterval);
+        document.getElementById('bpm-display').innerText = bpm + ' BPM';
+      }
+    }
+
+    function formatSunoText() {
+      const area = document.getElementById('suno-input');
+      if (area.value) {
+        area.value = "[Requinto Intro]\n\n[Verso 1]\n" + area.value + "\n\n[Coro - Tumbado Bélico]\n[Outro]";
+      }
+    }
+  </script>
+</body>
+</html>
